@@ -1,0 +1,23 @@
+{
+  "name": "taixiu-predictor",
+  "version": "1.0.0",
+  "description": "Tool dự đoán Tài Xỉu với 100+ layer phân tích cầu",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": ["taixiu", "prediction", "dice", "analysis"],
+  "author": "Hades Fvr Levi",
+  "license": "MIT"
+}
