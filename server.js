@@ -46,10 +46,10 @@ function updateHistory(newItems, existingHistory) {
 function normalizeData(data) {
     if (!Array.isArray(data)) data = [data];
     return data.map(item => {
-        const d1 = item.xuc_xac_1 || item.x1 || 0;
-        const d2 = item.xuc_xac_2 || item.x2 || 0;
-        const d3 = item.xuc_xac_3 || item.x3 || 0;
-        const tong = item.tong || item.total || (d1 + d2 + d3);
+        const d1 = item.dice1 || item.xuc_xac_1 || item.x1 || 0;
+        const d2 = item.dice2 || item.xuc_xac_2 || item.x2 || 0;
+        const d3 = item.dice3 || item.xuc_xac_3 || item.x3 || 0;
+        const tong = item.total || item.tong || (d1 + d2 + d3);
         const ketQua = (item.ket_qua || item.result || (tong >= 11 ? "tài" : "xỉu")).toLowerCase();
         return {
             phien: item.phien || item.session || item.id || 0,
@@ -685,7 +685,8 @@ app.get("/taixiu", async (req, res) => {
     try {
         const response = await axios.get(API_URL, { timeout: 10000 });
         const rawData = response.data;
-        const dataArray = rawData.data || rawData || [];
+        // ĐÃ SỬA: lấy mảng sessions từ API
+        const dataArray = rawData.sessions || rawData.data || rawData || [];
         let newData = normalizeData(Array.isArray(dataArray) ? dataArray : [dataArray]);
         
         let history = loadHistory();
@@ -728,7 +729,21 @@ app.get("/taixiu", async (req, res) => {
             so_phien_da_luu: history.length
         });
     } catch (err) {
-        res.json({ id: "Hades Fvr Levi Sunwin", phien_truoc: 0, xuc_xac1: 0, xuc_xac2: 0, xuc_xac3: 0, tong: 0, ket_qua: "tài", pattern: "[Đang kết nối...]", phien_hien_tai: 0, du_doan: "tài", do_tin_cay: "52%", so_phien_da_luu: 0 });
+        console.error("Lỗi:", err.message);
+        res.json({ 
+            id: "Hades Fvr Levi Sunwin", 
+            phien_truoc: 0, 
+            xuc_xac1: 0, 
+            xuc_xac2: 0, 
+            xuc_xac3: 0, 
+            tong: 0, 
+            ket_qua: "tài", 
+            pattern: "[Đang kết nối...]", 
+            phien_hien_tai: 0, 
+            du_doan: "tài", 
+            do_tin_cay: "52%", 
+            so_phien_da_luu: 0 
+        });
     }
 });
 
@@ -736,7 +751,8 @@ app.get("/", async (req, res) => {
     try {
         const response = await axios.get(API_URL, { timeout: 10000 });
         const rawData = response.data;
-        const dataArray = rawData.data || rawData || [];
+        // ĐÃ SỬA: lấy mảng sessions từ API
+        const dataArray = rawData.sessions || rawData.data || rawData || [];
         let newData = normalizeData(Array.isArray(dataArray) ? dataArray : [dataArray]);
         
         let history = loadHistory();
@@ -780,7 +796,21 @@ app.get("/", async (req, res) => {
         console.log("JSON:", JSON.stringify(result, null, 2));
         res.json(result);
     } catch (err) {
-        res.json({ id: "Hades Fvr Levi Sunwin", phien_truoc: 0, xuc_xac1: 0, xuc_xac2: 0, xuc_xac3: 0, tong: 0, ket_qua: "tài", pattern: "[Đang kết nối...]", phien_hien_tai: 0, du_doan: "tài", do_tin_cay: "52%", so_phien_da_luu: 0 });
+        console.error("Lỗi:", err.message);
+        res.json({ 
+            id: "Hades Fvr Levi Sunwin", 
+            phien_truoc: 0, 
+            xuc_xac1: 0, 
+            xuc_xac2: 0, 
+            xuc_xac3: 0, 
+            tong: 0, 
+            ket_qua: "tài", 
+            pattern: "[Đang kết nối...]", 
+            phien_hien_tai: 0, 
+            du_doan: "tài", 
+            do_tin_cay: "52%", 
+            so_phien_da_luu: 0 
+        });
     }
 });
 
